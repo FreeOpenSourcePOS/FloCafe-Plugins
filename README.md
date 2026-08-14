@@ -21,6 +21,8 @@ The India wrapper includes one print template:
 - template id: `in.gst.tax-invoice.v1`
 - renderer: `flocafe-thermal-receipt-template@1`
 - payload format: `escpos-line-template-v1`
+- live `official-india@1.0.1` profile mapping: `58mm -> 42 columns`,
+  `80mm -> 48 columns`
 
 ## Compatibility
 
@@ -34,6 +36,10 @@ additional wrapped plugin artifacts until the corresponding FloCafe loader path
 has landed in the target build line.
 
 Thailand remains a plain `CountryPack` artifact at `official-thailand@1.0.0`.
+
+`tax-packs/official-india/v1.0.2/plugin.json` is staged as the next India
+wrapper source for the printer-column template contract. Publish it only after
+FloCafe core supports `templatePayload.widthProfiles`.
 
 ## Country Tax Packs
 
@@ -66,9 +72,36 @@ Each tax-pack artifact that includes print templates declares:
 - a stable template id
 - a merchant-facing display name
 - country and jurisdiction scope
-- supported paper widths
+- supported printable column widths
 - renderer id/version
 - the template payload the renderer will consume
+
+Official FloCafe tax templates should prefer printable text columns over paper
+millimeters. The current target column set is:
+
+```ts
+type PrinterColumnWidth = 32 | 36 | 40 | 42 | 44 | 48;
+```
+
+Template payloads should provide `widthProfiles` for all six widths when
+practical:
+
+```json
+{
+  "format": "escpos-line-template-v1",
+  "widthProfiles": [
+    { "columns": 32, "layout": { "...": "..." } },
+    { "columns": 36, "layout": { "...": "..." } },
+    { "columns": 40, "layout": { "...": "..." } },
+    { "columns": 42, "layout": { "...": "..." } },
+    { "columns": 44, "layout": { "...": "..." } },
+    { "columns": 48, "layout": { "...": "..." } }
+  ]
+}
+```
+
+FloCafe core should select an exact profile first, then the nearest smaller
+profile. It must not squeeze a wider profile onto a smaller printer.
 
 Only source artifacts that are expected to install in the matching FloCafe
 loader branch should live under `tax-packs/`. Remove experimental wrappers or

@@ -30,6 +30,21 @@ The India wrapper must keep:
 - renderer: `{ "id": "flocafe-thermal-receipt-template", "version": 1 }`
 - payload format: `escpos-line-template-v1`
 
+For new India GST template releases, prefer printable column profiles instead
+of paper-millimeter assumptions:
+
+```ts
+type PrinterColumnWidth = 32 | 36 | 40 | 42 | 44 | 48;
+```
+
+Official templates should ship `templatePayload.widthProfiles` for all six
+widths when practical. Core is expected to choose exact match first, then the
+nearest smaller profile, and never render a wider layout on a smaller printer.
+
+`tax-packs/official-india/v1.0.2/plugin.json` is the staged source for this
+contract. Do not publish/tag it until the target FloCafe branch supports
+`widthProfiles`.
+
 ## Pre-Release Checks
 
 Before publishing, verify:

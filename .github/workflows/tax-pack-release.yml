@@ -6,7 +6,7 @@ on:
       - 'tax-pack-*-v*'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: tax-pack-release-${{ github.ref }}
@@ -27,7 +27,7 @@ jobs:
       - name: Download the newest published catalog
         id: previous-catalog
         env:
-          GH_TOKEN: ${{ secrets.TAX_PACK_RELEASE_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$RUNNER_TEMP/tax-pack-previous"
           LATEST_TAG="$(gh api --paginate "repos/FreeOpenSourcePOS/FloCafe-Plugins/releases?per_page=100" \
@@ -54,7 +54,7 @@ jobs:
 
       - name: Publish immutable release assets
         env:
-          GH_TOKEN: ${{ secrets.TAX_PACK_RELEASE_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$GITHUB_REF_NAME" \
             "$RUNNER_TEMP"/tax-pack-release/* \

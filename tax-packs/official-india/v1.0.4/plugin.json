@@ -1,0 +1,660 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "country-tax-pack-plugin",
+  "id": "tax-pack-official-india",
+  "displayName": "India Official GST Tax Pack",
+  "publisher": "FreeOpenSourcePOS",
+  "version": "1.0.4",
+  "country": "IN",
+  "jurisdiction": "*",
+  "publishedAt": "2026-08-15",
+  "minFloVersion": "2.4.0",
+  "taxPack": {
+    "schemaVersion": 1,
+    "id": "official-india",
+    "publisher": "FreeOpenSourcePOS",
+    "version": "1.0.4",
+    "country": "IN",
+    "jurisdiction": "*",
+    "currency": "INR",
+    "effectiveFrom": "2026-01-01",
+    "publishedAt": "2026-08-15",
+    "minFloVersion": "2.4.0",
+    "taxPoint": "finalized_at",
+    "inclusivePricingDefault": false,
+    "registrationNumberLabel": "GSTIN",
+    "categories": [
+      {
+        "id": "standard",
+        "label": "Standard",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      },
+      {
+        "id": "packaging",
+        "label": "Packaging",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      },
+      {
+        "id": "service_charge",
+        "label": "Service charge",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      },
+      {
+        "id": "addon",
+        "label": "Add-on",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      },
+      {
+        "id": "unclassified",
+        "label": "Unclassified",
+        "ruleIds": [
+          "b-cgst",
+          "a-sgst",
+          "igst"
+        ]
+      }
+    ],
+    "defaultCategories": {
+      "product": "standard",
+      "packaging": "packaging",
+      "delivery": "delivery",
+      "service_charge": "service_charge",
+      "addon": "addon"
+    },
+    "unclassifiedCategoryId": "unclassified",
+    "rules": [
+      {
+        "id": "b-cgst",
+        "label": "CGST",
+        "type": "percent",
+        "categoryIds": [
+          "standard",
+          "packaging",
+          "delivery",
+          "service_charge",
+          "addon",
+          "unclassified"
+        ],
+        "rate": "2.5",
+        "conditions": {
+          "businessTypes": [
+            "restaurant",
+            "salon"
+          ],
+          "customerStateRelation": "intra_or_unspecified"
+        }
+      },
+      {
+        "id": "a-sgst",
+        "label": "SGST",
+        "type": "percent",
+        "categoryIds": [
+          "standard",
+          "packaging",
+          "delivery",
+          "service_charge",
+          "addon",
+          "unclassified"
+        ],
+        "rate": "2.5",
+        "conditions": {
+          "businessTypes": [
+            "restaurant",
+            "salon"
+          ],
+          "customerStateRelation": "intra_or_unspecified"
+        }
+      },
+      {
+        "id": "igst",
+        "label": "IGST",
+        "type": "percent",
+        "categoryIds": [
+          "standard",
+          "packaging",
+          "delivery",
+          "service_charge",
+          "addon",
+          "unclassified"
+        ],
+        "rate": "5",
+        "conditions": {
+          "businessTypes": [
+            "restaurant",
+            "salon"
+          ],
+          "customerStateRelation": "interstate"
+        }
+      }
+    ],
+    "taxRounding": {
+      "scope": "document",
+      "method": "half_up",
+      "decimalPlaces": 2,
+      "remainderAllocation": "largest_remainder"
+    },
+    "payableRounding": {
+      "increment": "0.01",
+      "method": "half_up"
+    }
+  },
+  "printTemplates": [
+    {
+      "id": "in.gst.tax-invoice.v1",
+      "displayName": "India GST Thermal Tax Invoice",
+      "country": "IN",
+      "jurisdiction": "*",
+      "paperColumns": [
+        32,
+        36,
+        40,
+        42,
+        44,
+        48
+      ],
+      "renderer": {
+        "id": "flocafe-thermal-receipt-template",
+        "version": 1
+      },
+      "templatePayload": {
+        "format": "escpos-line-template-v1",
+        "widthProfiles": [
+          {
+            "columns": 32,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 18,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 9,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 22,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 36,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 20,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMOUNT",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 25,
+                "amountWidth": 10
+              }
+            }
+          },
+          {
+            "columns": 40,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 18,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMOUNT",
+                    "width": 8,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 31,
+                "amountWidth": 8
+              }
+            }
+          },
+          {
+            "columns": 42,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 20,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMOUNT",
+                    "width": 8,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 33,
+                "amountWidth": 8
+              }
+            }
+          },
+          {
+            "columns": 44,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 19,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "taxRate",
+                    "label": "GST",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 7,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 36,
+                "amountWidth": 7
+              }
+            }
+          },
+          {
+            "columns": 48,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 22,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "taxRate",
+                    "label": "GST",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMOUNT",
+                    "width": 8,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 39,
+                "amountWidth": 8
+              }
+            }
+          }
+        ],
+        "header": {
+          "businessNameTransform": "uppercase",
+          "logo": {
+            "source": "business.logo",
+            "fallback": "business.name"
+          },
+          "table": {
+            "source": "order.table.name",
+            "display": "prominent_when_present"
+          },
+          "taxTitleWhenTaxPresent": "TAX INVOICE",
+          "titleWhenTaxAbsent": "INVOICE",
+          "dateTimeLine": [
+            "bill.date",
+            "bill.time"
+          ]
+        },
+        "fields": {
+          "invoiceNumber": "{{bill.bill_number || order.order_number}}",
+          "date": "{{order.created_at | date:countryLocale}}",
+          "time": "{{order.created_at | time:countryLocale}}",
+          "table": "{{order.table.name}}",
+          "cashierName": "{{bill.cashier_name}}",
+          "customerName": "{{customer.name}}",
+          "customerPhone": "{{customer.phone}}",
+          "customerTaxRegistrationNumber": "{{customer.taxRegistrationNumber}}",
+          "taxRegistrationNumberLabel": "GSTIN",
+          "businessTaxRegistrationNumber": "{{business.taxRegistrationNumber}}",
+          "businessAddress": "{{business.address}}",
+          "businessPhone": "{{business.phone}}",
+          "externalReference": "{{order.external_reference}}"
+        },
+        "totals": {
+          "showSubtotal": true,
+          "showDiscount": "when_non_zero",
+          "taxComponentLabel": "{{component.title}} @{{component.rate}}%",
+          "showTaxRegistrationNumber": "when_tax_present_or_enabled",
+          "grandTotalLabel": "GRAND TOTAL"
+        },
+        "footer": {
+          "useConfiguredFooterNote": true,
+          "defaultMessage": "Thank you for your business!",
+          "includePoweredByFloPOS": true
+        },
+        "document": {
+          "kind": "tax_invoice",
+          "layoutOrder": [
+            "brandHeader",
+            "orderIdentity",
+            "customerBlock",
+            "itemTable",
+            "itemNotes",
+            "adjustments",
+            "totals",
+            "payments",
+            "loyalty",
+            "taxBreakup",
+            "footer"
+          ],
+          "brandHeader": {
+            "align": "center",
+            "emphasizeBusinessName": true,
+            "includeLogoWhenAvailable": true,
+            "includeTableNameWhenAvailable": true
+          },
+          "orderIdentity": {
+            "align": "center",
+            "fields": [
+              "invoiceNumber",
+              "date",
+              "time",
+              "externalReference"
+            ],
+            "externalReferenceMode": "when_present"
+          },
+          "customerBlock": {
+            "align": "center",
+            "fields": [
+              "customerName",
+              "customerPhone",
+              "customerTaxRegistrationNumber"
+            ],
+            "customerTaxRegistrationNumberMode": "when_present"
+          },
+          "itemTable": {
+            "source": "bill.items",
+            "showHeader": true,
+            "separator": "line",
+            "itemName": {
+              "wrap": true,
+              "maxLines": 2,
+              "overflow": "ellipsis"
+            },
+            "rateMode": "tax_exclusive_when_tax_present",
+            "taxRateMode": "when_profile_has_tax_rate_column",
+            "detailLines": [
+              "addons",
+              "specialInstructions"
+            ]
+          },
+          "itemNotes": {
+            "sources": [
+              "order.specialInstructions",
+              "item.specialInstructions"
+            ],
+            "mode": "when_present"
+          },
+          "adjustments": {
+            "showLoyaltyRedemption": "when_non_zero",
+            "showDiscount": "when_non_zero",
+            "separatorAfter": true
+          },
+          "totals": {
+            "showSubtotal": true,
+            "showQuantityTotal": true,
+            "showDiscount": "when_non_zero",
+            "grandTotalLabel": "TOTAL",
+            "emphasizeGrandTotal": true,
+            "separatorBefore": true,
+            "separatorAfter": true
+          },
+          "payments": {
+            "showPaymentMethods": "when_configured_or_present",
+            "methodLabels": {
+              "cash": "Cash",
+              "card": "Card",
+              "wallet": "{{payment.walletName || \"Wallet\"}}"
+            },
+            "showPaid": true,
+            "showChange": "when_non_zero",
+            "separatorAfter": true
+          },
+          "loyalty": {
+            "showPointsEarned": "when_non_zero",
+            "showBalancePoints": "when_non_zero"
+          },
+          "taxBreakup": {
+            "source": "bill.taxComponents",
+            "mode": "when_tax_present",
+            "label": "{{component.title}} @{{component.rate}}%"
+          },
+          "footer": {
+            "align": "center",
+            "businessTaxRegistrationLine": "{{taxRegistrationNumberLabel}} : {{businessTaxRegistrationNumber}}",
+            "invoiceLine": "Bill # {{invoiceNumber}}",
+            "billedByLine": "Billed by {{cashierName}}",
+            "includeBusinessAddress": true,
+            "includeBusinessPhone": true,
+            "printedAt": "{{now | datetime:countryLocale}}",
+            "useConfiguredFooterNote": true,
+            "defaultMessage": "Thank you for your business!",
+            "includePoweredByFloPOS": true
+          },
+          "finish": {
+            "cutPaper": true,
+            "pulseCashDrawer": "when_configured"
+          }
+        },
+        "companionDocuments": {
+          "kot": {
+            "renderer": {
+              "id": "flocafe-thermal-receipt-template",
+              "version": 1
+            },
+            "format": "escpos-line-template-v1",
+            "source": "order.kitchenItems",
+            "layoutOrder": [
+              "tableHeader",
+              "customerLine",
+              "timeLine",
+              "items",
+              "footer"
+            ],
+            "tableHeader": {
+              "align": "center",
+              "emphasis": true,
+              "size": "double",
+              "field": "order.table.name"
+            },
+            "customerLine": {
+              "fields": [
+                "customer.name",
+                "customer.phone"
+              ],
+              "phoneMode": "when_enabled"
+            },
+            "items": {
+              "prefix": ">",
+              "quantityFormat": "{{quantity}} x",
+              "itemName": {
+                "wrap": true,
+                "maxLines": 2,
+                "overflow": "ellipsis"
+              },
+              "detailLines": [
+                "addons",
+                "specialInstructions"
+              ]
+            },
+            "footer": {
+              "printedAt": "{{now | datetime:countryLocale}}",
+              "cutPaper": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}

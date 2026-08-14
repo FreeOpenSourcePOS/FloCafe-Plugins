@@ -17,10 +17,12 @@ and capability plugins.
 
 ## Current Compatibility
 
-- `official-india@1.0.1` is a wrapped `country-tax-pack-plugin` artifact.
-- `official-india@1.0.1` requires the FloCafe wrapper-loader path.
+- `official-india@1.0.4` is a wrapped `country-tax-pack-plugin` artifact.
+- `official-india@1.0.4` requires the FloCafe wrapper-loader path and supports
+  printable column profiles.
 - Older released FloCafe builds that only parse plain `CountryPack` JSON may fail to install India from the latest catalog.
-- `official-thailand@1.0.0` remains a plain `CountryPack` artifact.
+- Thailand is intentionally not in the active catalog while the India
+  wrapper-template path is being tested.
 
 ## India GST Template Contract
 
@@ -41,9 +43,12 @@ Official templates should ship `templatePayload.widthProfiles` for all six
 widths when practical. Core is expected to choose exact match first, then the
 nearest smaller profile, and never render a wider layout on a smaller printer.
 
-`tax-packs/official-india/v1.0.2/plugin.json` is the staged source for this
-contract. Do not publish/tag it until the target FloCafe branch supports
-`widthProfiles`.
+`tax-packs/official-india/v1.0.4/plugin.json` is the source artifact for a
+fuller GST thermal invoice payload. It keeps the same template id, renderer,
+payload format, and six width profiles, then adds FloCafe-native declarative
+sections for brand/table/customer header, invoice identity, item grid, item
+notes/addons, adjustments, totals, payments, loyalty, tax breakup, footer, cut,
+cash-drawer pulse, and companion KOT recipe.
 
 ## Pre-Release Checks
 

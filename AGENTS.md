@@ -17,8 +17,8 @@ and capability plugins.
 
 ## Current Compatibility
 
-- `official-india@1.0.4` is a wrapped `country-tax-pack-plugin` artifact.
-- `official-india@1.0.4` requires the FloCafe wrapper-loader path and supports
+- `official-india@1.0.5` is a wrapped `country-tax-pack-plugin` artifact.
+- `official-india@1.0.5` requires the FloCafe wrapper-loader path and supports
   printable column profiles.
 - Older released FloCafe builds that only parse plain `CountryPack` JSON may fail to install India from the latest catalog.
 - Thailand is intentionally not in the active catalog while the India
@@ -26,9 +26,19 @@ and capability plugins.
 
 ## India GST Template Contract
 
-The India wrapper must keep:
+The India wrapper ships two print templates in `printTemplates`, both under
+the same tax pack:
 
-- template id: `in.gst.tax-invoice.v1`
+- `in.gst.tax-invoice.v1` ("GST Advanced") — full item grid including a
+  per-line `rate` (unit price) column on the 40/42/44/48-column profiles.
+- `in.gst.tax-invoice-simple.v1` ("GST Simple") — identical in every other
+  respect, but omits the `rate` column at every paper width; the freed column
+  width is folded into the `item` column so each profile's columns still sum
+  to its paper width. The 44/48-column `taxRate` (GST%) column is unaffected
+  by this — only `rate` is dropped.
+
+Both templates must keep:
+
 - renderer: `{ "id": "flocafe-thermal-receipt-template", "version": 1 }`
 - payload format: `escpos-line-template-v1`
 
@@ -43,12 +53,16 @@ Official templates should ship `templatePayload.widthProfiles` for all six
 widths when practical. Core is expected to choose exact match first, then the
 nearest smaller profile, and never render a wider layout on a smaller printer.
 
-`tax-packs/official-india/v1.0.4/plugin.json` is the source artifact for a
-fuller GST thermal invoice payload. It keeps the same template id, renderer,
-payload format, and six width profiles, then adds FloCafe-native declarative
+`tax-packs/official-india/v1.0.5/plugin.json` is the source artifact for the
+fuller GST thermal invoice payload. Each template keeps the same renderer,
+payload format, and six width profiles, and adds FloCafe-native declarative
 sections for brand/table/customer header, invoice identity, item grid, item
 notes/addons, adjustments, totals, payments, loyalty, tax breakup, footer, cut,
 cash-drawer pulse, and companion KOT recipe.
+
+Released version directories (e.g. `v1.0.4`) are immutable once tagged and
+published — ship further changes as a new `v<semver>` directory, never by
+editing an already-tagged artifact in place.
 
 ## Pre-Release Checks
 

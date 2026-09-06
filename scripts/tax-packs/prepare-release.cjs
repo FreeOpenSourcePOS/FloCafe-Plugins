@@ -130,7 +130,13 @@ function prepareRelease({
   };
 
   const existingCatalog = loadExistingCatalog(existingCatalogPath);
-  const previousEntries = existingCatalog.packs.filter((candidate) => candidate.id !== pack.id);
+  // Official wrappers supersede the historical community catalog entries.
+  // Keep old releases immutable, but do not leave duplicate country choices in
+  // the active cumulative catalog after the first official replacement lands.
+  const previousEntries = existingCatalog.packs.filter((candidate) => (
+    candidate.id !== pack.id
+    && !(pack.publisher === 'FreeOpenSourcePOS' && candidate.id.startsWith('community-'))
+  ));
   const catalog = {
     schemaVersion: 1,
     generatedAt,

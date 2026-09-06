@@ -164,3 +164,13 @@ for (const source of ['th.json', 'in.json']) {
   const name = pack.country === 'TH' ? 'Thailand' : 'India';
   writeJson(path.join(wrapperDir, pack.id, `v1.0.0`, 'plugin.json'), makeWrapper(pack, name));
 }
+
+// One immutable catalog-cleanup release removes the superseded community IDs
+// from the cumulative catalog without rewriting any already-published bytes.
+const cleanupFile = path.join(wrapperDir, 'official-za', 'v1.0.1', 'plugin.json');
+const cleanup = readJson(path.join(wrapperDir, 'official-za', 'v1.0.0', 'plugin.json'));
+cleanup.version = '1.0.1';
+cleanup.taxPack.version = '1.0.1';
+cleanup.taxPack.publishedAt = publishedAt;
+cleanup.publishedAt = publishedAt;
+writeJson(cleanupFile, cleanup);

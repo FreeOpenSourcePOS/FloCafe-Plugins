@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "id": "official-gb",
+  "publisher": "FreeOpenSourcePOS",
+  "sourceType": "official",
+  "version": "1.0.0",
+  "country": "GB",
+  "jurisdiction": "*",
+  "currency": "GBP",
+  "effectiveFrom": "2026-09-06",
+  "publishedAt": "2026-09-06",
+  "minFloVersion": "2.4.0",
+  "taxPoint": "finalized_at",
+  "inclusivePricingDefault": true,
+  "registrationNumberLabel": "VAT registration number",
+  "categories": [
+    {
+      "id": "standard",
+      "label": "Standard food and restaurant supply",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "packaging",
+      "label": "Packaging",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "service_charge",
+      "label": "Service charge",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "addon",
+      "label": "Addon",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "alcohol",
+      "label": "Alcoholic beverages",
+      "ruleIds": [
+        "alcohol"
+      ]
+    },
+    {
+      "id": "cold_takeaway",
+      "label": "Cold takeaway food",
+      "ruleIds": [
+        "cold-takeaway"
+      ]
+    }
+  ],
+  "defaultCategories": {
+    "product": "standard",
+    "packaging": "packaging",
+    "delivery": "delivery",
+    "service_charge": "service_charge",
+    "addon": "addon"
+  },
+  "unclassifiedCategoryId": "unclassified",
+  "rules": [
+    {
+      "id": "standard",
+      "label": "VAT (standard food and restaurant supply)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "20"
+    },
+    {
+      "id": "alcohol",
+      "label": "VAT (alcoholic beverages)",
+      "type": "percent",
+      "categoryIds": [
+        "alcohol"
+      ],
+      "rate": "20"
+    },
+    {
+      "id": "cold-takeaway",
+      "label": "VAT (cold takeaway food)",
+      "type": "percent",
+      "categoryIds": [
+        "cold_takeaway"
+      ],
+      "rate": "0"
+    }
+  ],
+  "taxRounding": {
+    "scope": "document",
+    "method": "half_up",
+    "decimalPlaces": 2,
+    "remainderAllocation": "largest_remainder"
+  },
+  "payableRounding": {
+    "increment": "0.01",
+    "method": "half_up"
+  },
+  "registrationNumberFormat": {
+    "pattern": "^GB\\d{9}(\\d{3})?$",
+    "description": "VAT registration number format"
+  }
+}

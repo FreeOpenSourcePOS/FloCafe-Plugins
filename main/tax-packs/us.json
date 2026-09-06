@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "official-us",
+  "publisher": "FreeOpenSourcePOS",
+  "sourceType": "official",
+  "version": "1.0.0",
+  "country": "US",
+  "jurisdiction": "*",
+  "currency": "USD",
+  "effectiveFrom": "2026-09-06",
+  "publishedAt": "2026-09-06",
+  "minFloVersion": "2.4.0",
+  "taxPoint": "finalized_at",
+  "inclusivePricingDefault": false,
+  "registrationNumberLabel": "EIN",
+  "registrationNumberFormat": {
+    "pattern": "^\\d{2}-?\\d{7}$",
+    "description": "IRS Employer Identification Number, formatted XX-XXXXXXX"
+  },
+  "categories": [
+    {
+      "id": "standard",
+      "label": "Merchant-configured state/local sales tax",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    },
+    {
+      "id": "packaging",
+      "label": "Packaging",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    },
+    {
+      "id": "service_charge",
+      "label": "Service charge",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    },
+    {
+      "id": "addon",
+      "label": "Add-on",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "ruleIds": [
+        "sales-tax-local"
+      ]
+    }
+  ],
+  "defaultCategories": {
+    "product": "standard",
+    "packaging": "packaging",
+    "delivery": "delivery",
+    "service_charge": "service_charge",
+    "addon": "addon"
+  },
+  "unclassifiedCategoryId": "unclassified",
+  "rules": [
+    {
+      "id": "sales-tax-local",
+      "label": "Sales Tax (merchant-configured state/local rate)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "0"
+    }
+  ],
+  "taxRounding": {
+    "scope": "document",
+    "method": "half_up",
+    "decimalPlaces": 2,
+    "remainderAllocation": "largest_remainder"
+  },
+  "payableRounding": {
+    "increment": "0.01",
+    "method": "half_up"
+  }
+}

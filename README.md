@@ -2,30 +2,47 @@
 
 Signed tax-pack and capability-plugin release artifacts for FloCafe.
 
-## Live catalog state
+## Supported countries
 
-Verified from FloCafe core against GitHub Releases:
+Each country has one published release: its latest official tax pack. Click a
+country to open its release page.
 
-- latest release tag: `tax-pack-official-india-v1.0.4`
-- catalog entries:
-  - `official-india@1.0.4`
-- India wrapper digest:
-  `d5fecc088453e23e19e897c9a89759311b47c3bbfc7bcb64cae15f167fe140de`
-- India artifact type: `country-tax-pack-plugin`
-- India tax pack stored by FloCafe core: inner `CountryPack` from `taxPack`
-- India signed artifact retained by FloCafe core: full wrapper JSON bytes
+| Country | Version |
+| --- | --- |
+| [Algeria](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-dz-v1.0.0) | 1.0.0 |
+| [Argentina](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ar-v1.0.0) | 1.0.0 |
+| [Cameroon](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-cm-v1.0.0) | 1.0.0 |
+| [Egypt](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-eg-v1.0.0) | 1.0.0 |
+| [France](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-fr-v1.0.0) | 1.0.0 |
+| [Ghana](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-gh-v1.0.0) | 1.0.0 |
+| [India](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-india-v1.0.5) | 1.0.5 |
+| [Indonesia](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-id-v1.0.0) | 1.0.0 |
+| [Japan](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-jp-v1.0.0) | 1.0.0 |
+| [Mexico](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-mx-v1.0.0) | 1.0.0 |
+| [Morocco](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ma-v1.0.0) | 1.0.0 |
+| [Nepal](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-np-v1.0.0) | 1.0.0 |
+| [Pakistan](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-pk-v1.0.0) | 1.0.0 |
+| [Philippines](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ph-v1.0.0) | 1.0.0 |
+| [Saudi Arabia](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-sa-v1.0.0) | 1.0.0 |
+| [South Africa](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-za-v1.0.1) | 1.0.1 |
+| [Thailand](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-thailand-v1.0.0) | 1.0.0 |
+| [Uganda](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ug-v1.0.0) | 1.0.0 |
+| [United Kingdom](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-gb-v1.0.0) | 1.0.0 |
+| [United States](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-us-v1.0.0) | 1.0.0 |
+| [Uzbekistan](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-uz-v1.0.0) | 1.0.0 |
 
-The India wrapper includes one print template:
+The India wrapper includes two print templates:
 
-- template id: `in.gst.tax-invoice.v1`
+- template ids: `in.gst.tax-invoice.v1` and
+  `in.gst.tax-invoice-simple.v1`
 - renderer: `flocafe-thermal-receipt-template@1`
 - payload format: `escpos-line-template-v1`
-- live `official-india@1.0.4` printable columns: `32`, `36`, `40`, `42`,
+- live `official-india@1.0.5` printable columns: `32`, `36`, `40`, `42`,
   `44`, `48`
 
 ## Compatibility
 
-`official-india@1.0.4` is a wrapped plugin artifact. It is installable by the
+`official-india@1.0.5` is a wrapped plugin artifact. It is installable by the
 FloCafe wrapper-loader branch that validates the full wrapper bytes while
 storing the inner `taxPack` as `packJson`.
 
@@ -37,7 +54,7 @@ has landed in the target build line.
 Thailand is not in the active catalog while the India wrapper-template path is
 being tested.
 
-`tax-packs/official-india/v1.0.4/plugin.json` is the India wrapper source for
+`tax-packs/official-india/v1.0.5/plugin.json` is the India wrapper source for
 the fuller GST receipt anatomy. It keeps the printer-column template contract
 from `1.0.2` and adds declarative sections for the bill, payments, tax breakup,
 footer, and a companion KOT recipe.
@@ -147,23 +164,19 @@ assets:
 - `<pack-id>-v<semver>.json.sig`
 - `catalog.json`
 
-Published releases:
+Published releases are listed under [Supported countries](#supported-countries).
 
-- `tax-pack-official-india-v1.0.4`
-
-The current source tree also contains release-ready official wrapper artifacts
-for every country requested through FloAdmin tax-support tickets: Argentina,
+The current source tree contains official wrapper artifacts for every country
+requested through FloAdmin tax-support tickets: Argentina,
 Algeria, Cameroon, Egypt, France, Ghana, the United Kingdom, Indonesia, Japan,
 Morocco, Mexico, Nepal, Pakistan, the Philippines, Saudi Arabia, South Africa,
-Thailand, Uganda, the United States, and Uzbekistan. The former
-`community-*` files remain as immutable historical source inputs for their
-already-published releases; the `official-*` artifacts supersede them for new
-releases.
+Thailand, Uganda, the United States, and Uzbekistan. The `official-*` artifacts
+supersede the former `community-*` sources.
 
 Each new official wrapper contains an advanced and simple thermal invoice
 template with profiles for 32, 36, 40, 42, 44, and 48 printable columns. New
-official artifacts must still be tagged individually and signed by the release
-workflow before FloCafe can install them from the live catalog.
+official artifacts are tagged individually and signed by the release workflow
+before FloCafe can install them from the live catalog.
 
 Wrapped plugin artifacts can also include print-template metadata. For those
 releases, `catalog.json` points at the wrapper JSON and the catalog digest plus

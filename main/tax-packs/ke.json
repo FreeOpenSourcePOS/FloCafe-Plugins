@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "id": "official-ke",
+  "publisher": "FreeOpenSourcePOS",
+  "sourceType": "official",
+  "version": "1.0.0",
+  "country": "KE",
+  "jurisdiction": "*",
+  "currency": "KES",
+  "effectiveFrom": "2026-09-09",
+  "publishedAt": "2026-09-09",
+  "minFloVersion": "2.4.0",
+  "taxPoint": "finalized_at",
+  "inclusivePricingDefault": true,
+  "registrationNumberLabel": "KRA PIN",
+  "categories": [
+    {
+      "id": "standard",
+      "label": "Standard food and restaurant supply (VAT 16% + Tourism Levy 2%)",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    },
+    {
+      "id": "packaging",
+      "label": "Packaging",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    },
+    {
+      "id": "service_charge",
+      "label": "Service charge",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    },
+    {
+      "id": "addon",
+      "label": "Addon",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "ruleIds": [
+        "vat",
+        "tourism-levy"
+      ]
+    }
+  ],
+  "defaultCategories": {
+    "product": "standard",
+    "packaging": "packaging",
+    "delivery": "delivery",
+    "service_charge": "service_charge",
+    "addon": "addon"
+  },
+  "unclassifiedCategoryId": "unclassified",
+  "rules": [
+    {
+      "id": "vat",
+      "label": "VAT (standard food and restaurant supply)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "16"
+    },
+    {
+      "id": "tourism-levy",
+      "label": "Tourism Levy (regulated restaurants and tourism activities)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "2"
+    }
+  ],
+  "taxRounding": {
+    "scope": "document",
+    "method": "half_up",
+    "decimalPlaces": 2,
+    "remainderAllocation": "largest_remainder"
+  },
+  "payableRounding": {
+    "increment": "0.01",
+    "method": "half_up"
+  },
+  "registrationNumberFormat": {
+    "pattern": "^[AP]\\d{9}[A-Z]$",
+    "description": "KRA PIN format"
+  }
+}

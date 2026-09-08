@@ -13,6 +13,18 @@ const publishedAt = '2026-09-06';
 const countries = {
   CM: { name: 'Cameroon', currency: 'XAF', rate: '19.25', label: 'VAT', registration: 'Taxpayer Identification Number' },
   UG: { name: 'Uganda', currency: 'UGX', rate: '18', label: 'VAT', registration: 'TIN', pattern: '^\\d{10}$' },
+  KE: {
+    name: 'Kenya',
+    currency: 'KES',
+    rate: '16',
+    label: 'VAT',
+    registration: 'KRA PIN',
+    pattern: '^[AP]\\d{9}[A-Z]$',
+    tourismLevyRate: '2',
+    publishedAt: '2026-09-09',
+    templateRegistration: 'KRA PIN',
+    exactProfileWidths: true,
+  },
   MA: { name: 'Morocco', currency: 'MAD', rate: '10', label: 'TVA', registration: 'Identifiant fiscal', pattern: '^\\d{15}$', alcoholRate: '20' },
   GB: { name: 'United Kingdom', currency: 'GBP', rate: '20', label: 'VAT', registration: 'VAT registration number', pattern: '^GB\\d{9}(\\d{3})?$', coldRate: '0', alcoholRate: '20' },
   EG: { name: 'Egypt', currency: 'EGP', rate: '14', label: 'VAT', registration: 'Tax registration number', pattern: '^\\d{9}$' },
@@ -31,6 +43,7 @@ function rule(id, label, rate, categoryIds) {
 }
 
 function basePack(code, meta) {
+  const effectiveDate = meta.publishedAt || publishedAt;
   const standardIds = ['standard', 'packaging', 'delivery', 'service_charge', 'addon', 'unclassified'];
   const pack = {
     schemaVersion: 1,
@@ -41,8 +54,8 @@ function basePack(code, meta) {
     country: code,
     jurisdiction: '*',
     currency: meta.currency,
-    effectiveFrom: publishedAt,
-    publishedAt,
+    effectiveFrom: effectiveDate,
+    publishedAt: effectiveDate,
     minFloVersion: '2.4.0',
     taxPoint: 'finalized_at',
     inclusivePricingDefault: true,
@@ -61,6 +74,18 @@ function basePack(code, meta) {
 function addSpecialCategories(pack, meta) {
   const standard = pack.categories.find((c) => c.id === 'standard');
   const all = allCategoryIds(pack);
+  if (meta.tourismLevyRate) {
+    pack.rules[0].id = 'vat';
+    pack.rules[0].label = `${meta.label} (standard food and restaurant supply)`;
+    pack.categories.forEach((category) => { category.ruleIds = ['vat', 'tourism-levy']; });
+    pack.rules.push(rule(
+      'tourism-levy',
+      'Tourism Levy (regulated restaurants and tourism activities)',
+      meta.tourismLevyRate,
+      all,
+    ));
+    standard.label = `Standard food and restaurant supply (${meta.label} ${meta.rate}% + Tourism Levy ${meta.tourismLevyRate}%)`;
+  }
   if (meta.alcoholRate) {
     pack.categories.push({ id: 'alcohol', label: 'Alcoholic beverages', ruleIds: ['alcohol'] });
     pack.rules.push(rule('alcohol', `${meta.label} (alcoholic beverages)`, meta.alcoholRate, ['alcohol']));
@@ -77,10 +102,14 @@ function addSpecialCategories(pack, meta) {
   return pack;
 }
 
-function template(code, name, simple = false) {
+function template(code, name, simple = false, registrationLabel = 'TAX ID', exactProfileWidths = false) {
   const profiles = [32, 36, 40, 42, 44, 48].map((columns) => {
     const narrow = columns <= 36;
-    const item = narrow ? columns - 14 : columns - (simple ? 13 : 20);
+    // Preserve the already-published layouts byte-for-byte. New artifacts opt
+    // into profiles whose column widths plus gaps equal the printer width.
+    const item = narrow
+      ? columns - 14
+      : columns - (exactProfileWidths ? (simple ? 16 : 24) : (simple ? 13 : 20));
     const lineColumns = [
       { key: 'item', label: 'ITEM', width: item, align: 'left', wrap: true, maxLines: 2 },
       { key: 'quantity', label: 'QTY', width: narrow ? 3 : 4, align: 'right' },
@@ -100,7 +129,7 @@ function template(code, name, simple = false) {
       format: 'escpos-line-template-v1',
       widthProfiles: profiles,
       header: { businessNameTransform: 'uppercase', taxTitleWhenTaxPresent: 'TAX INVOICE', titleWhenTaxAbsent: 'INVOICE' },
-      fields: { taxRegistrationNumberLabel: 'TAX ID' },
+      fields: { taxRegistrationNumberLabel: registrationLabel },
       lineItems: { includeAddons: true, includeSpecialInstructions: true },
       totals: { showSubtotal: true, showDiscount: true, showTaxRegistrationNumber: 'when_tax_present_or_enabled' },
       footer: { useConfiguredFooterNote: true, includePoweredByFloPOS: true },
@@ -108,7 +137,7 @@ function template(code, name, simple = false) {
   };
 }
 
-function makeWrapper(pack, name) {
+function makeWrapper(pack, name, meta = {}) {
   return {
     schemaVersion: 1,
     artifactType: 'country-tax-pack-plugin',
@@ -121,14 +150,17 @@ function makeWrapper(pack, name) {
     publishedAt: pack.publishedAt,
     minFloVersion: pack.minFloVersion,
     taxPack: pack,
-    printTemplates: [template(pack.country, name), template(pack.country, name, true)],
+    printTemplates: [
+      template(pack.country, name, false, meta.templateRegistration, meta.exactProfileWidths),
+      template(pack.country, name, true, meta.templateRegistration, meta.exactProfileWidths),
+    ],
   };
 }
 
 for (const [code, meta] of Object.entries(countries)) {
   const pack = addSpecialCategories(basePack(code, meta), meta);
   writeJson(path.join(sourceDir, `${code.toLowerCase()}.json`), pack);
-  writeJson(path.join(wrapperDir, pack.id, `v${pack.version}`, 'plugin.json'), makeWrapper(pack, meta.name));
+  writeJson(path.join(wrapperDir, pack.id, `v${pack.version}`, 'plugin.json'), makeWrapper(pack, meta.name, meta));
 }
 
 for (const source of fs.readdirSync(sourceDir).filter((file) => file.startsWith('community-') && file.endsWith('.json'))) {

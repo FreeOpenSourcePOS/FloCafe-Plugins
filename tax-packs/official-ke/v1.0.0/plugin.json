@@ -1,0 +1,700 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "country-tax-pack-plugin",
+  "id": "tax-pack-official-ke",
+  "displayName": "Kenya Official Tax Pack",
+  "publisher": "FreeOpenSourcePOS",
+  "version": "1.0.0",
+  "country": "KE",
+  "jurisdiction": "*",
+  "publishedAt": "2026-09-09",
+  "minFloVersion": "2.4.0",
+  "taxPack": {
+    "schemaVersion": 1,
+    "id": "official-ke",
+    "publisher": "FreeOpenSourcePOS",
+    "sourceType": "official",
+    "version": "1.0.0",
+    "country": "KE",
+    "jurisdiction": "*",
+    "currency": "KES",
+    "effectiveFrom": "2026-09-09",
+    "publishedAt": "2026-09-09",
+    "minFloVersion": "2.4.0",
+    "taxPoint": "finalized_at",
+    "inclusivePricingDefault": true,
+    "registrationNumberLabel": "KRA PIN",
+    "categories": [
+      {
+        "id": "standard",
+        "label": "Standard food and restaurant supply (VAT 16% + Tourism Levy 2%)",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      },
+      {
+        "id": "packaging",
+        "label": "Packaging",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      },
+      {
+        "id": "service_charge",
+        "label": "Service charge",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      },
+      {
+        "id": "addon",
+        "label": "Addon",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      },
+      {
+        "id": "unclassified",
+        "label": "Unclassified",
+        "ruleIds": [
+          "vat",
+          "tourism-levy"
+        ]
+      }
+    ],
+    "defaultCategories": {
+      "product": "standard",
+      "packaging": "packaging",
+      "delivery": "delivery",
+      "service_charge": "service_charge",
+      "addon": "addon"
+    },
+    "unclassifiedCategoryId": "unclassified",
+    "rules": [
+      {
+        "id": "vat",
+        "label": "VAT (standard food and restaurant supply)",
+        "type": "percent",
+        "categoryIds": [
+          "standard",
+          "packaging",
+          "delivery",
+          "service_charge",
+          "addon",
+          "unclassified"
+        ],
+        "rate": "16"
+      },
+      {
+        "id": "tourism-levy",
+        "label": "Tourism Levy (regulated restaurants and tourism activities)",
+        "type": "percent",
+        "categoryIds": [
+          "standard",
+          "packaging",
+          "delivery",
+          "service_charge",
+          "addon",
+          "unclassified"
+        ],
+        "rate": "2"
+      }
+    ],
+    "taxRounding": {
+      "scope": "document",
+      "method": "half_up",
+      "decimalPlaces": 2,
+      "remainderAllocation": "largest_remainder"
+    },
+    "payableRounding": {
+      "increment": "0.01",
+      "method": "half_up"
+    },
+    "registrationNumberFormat": {
+      "pattern": "^[AP]\\d{9}[A-Z]$",
+      "description": "KRA PIN format"
+    }
+  },
+  "printTemplates": [
+    {
+      "id": "ke.vat.tax-invoice.v1",
+      "displayName": "Kenya Tax Invoice",
+      "country": "KE",
+      "jurisdiction": "*",
+      "paperColumns": [
+        32,
+        36,
+        40,
+        42,
+        44,
+        48
+      ],
+      "renderer": {
+        "id": "flocafe-thermal-receipt-template",
+        "version": 1
+      },
+      "templatePayload": {
+        "format": "escpos-line-template-v1",
+        "widthProfiles": [
+          {
+            "columns": 32,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 18,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 9,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 22,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 36,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 22,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 9,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 26,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 40,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 16,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 30,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 42,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 18,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 32,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 44,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 20,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 34,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 48,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 24,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "rate",
+                    "label": "RATE",
+                    "width": 7,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 38,
+                "amountWidth": 9
+              }
+            }
+          }
+        ],
+        "header": {
+          "businessNameTransform": "uppercase",
+          "taxTitleWhenTaxPresent": "TAX INVOICE",
+          "titleWhenTaxAbsent": "INVOICE"
+        },
+        "fields": {
+          "taxRegistrationNumberLabel": "KRA PIN"
+        },
+        "lineItems": {
+          "includeAddons": true,
+          "includeSpecialInstructions": true
+        },
+        "totals": {
+          "showSubtotal": true,
+          "showDiscount": true,
+          "showTaxRegistrationNumber": "when_tax_present_or_enabled"
+        },
+        "footer": {
+          "useConfiguredFooterNote": true,
+          "includePoweredByFloPOS": true
+        }
+      }
+    },
+    {
+      "id": "ke.vat.tax-invoice-simple.v1",
+      "displayName": "Kenya Tax Invoice Simple",
+      "country": "KE",
+      "jurisdiction": "*",
+      "paperColumns": [
+        32,
+        36,
+        40,
+        42,
+        44,
+        48
+      ],
+      "renderer": {
+        "id": "flocafe-thermal-receipt-template",
+        "version": 1
+      },
+      "templatePayload": {
+        "format": "escpos-line-template-v1",
+        "widthProfiles": [
+          {
+            "columns": 32,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 18,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 9,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 22,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 36,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 22,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 3,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "AMT",
+                    "width": 9,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 26,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 40,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 24,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 30,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 42,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 26,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 32,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 44,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 28,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 34,
+                "amountWidth": 9
+              }
+            }
+          },
+          {
+            "columns": 48,
+            "layout": {
+              "lineItems": {
+                "gap": 1,
+                "columns": [
+                  {
+                    "key": "item",
+                    "label": "ITEM",
+                    "width": 32,
+                    "align": "left",
+                    "wrap": true,
+                    "maxLines": 2
+                  },
+                  {
+                    "key": "quantity",
+                    "label": "QTY",
+                    "width": 4,
+                    "align": "right"
+                  },
+                  {
+                    "key": "amount",
+                    "label": "TOTAL",
+                    "width": 10,
+                    "align": "right"
+                  }
+                ],
+                "detailLines": [
+                  "addons",
+                  "specialInstructions"
+                ]
+              },
+              "taxSummary": {
+                "labelWidth": 38,
+                "amountWidth": 9
+              }
+            }
+          }
+        ],
+        "header": {
+          "businessNameTransform": "uppercase",
+          "taxTitleWhenTaxPresent": "TAX INVOICE",
+          "titleWhenTaxAbsent": "INVOICE"
+        },
+        "fields": {
+          "taxRegistrationNumberLabel": "KRA PIN"
+        },
+        "lineItems": {
+          "includeAddons": true,
+          "includeSpecialInstructions": true
+        },
+        "totals": {
+          "showSubtotal": true,
+          "showDiscount": true,
+          "showTaxRegistrationNumber": "when_tax_present_or_enabled"
+        },
+        "footer": {
+          "useConfiguredFooterNote": true,
+          "includePoweredByFloPOS": true
+        }
+      }
+    }
+  ]
+}

@@ -27,6 +27,7 @@ country to open its release page.
 | [Saudi Arabia](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-sa-v1.0.0) | 1.0.0 |
 | [South Africa](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-za-v1.0.1) | 1.0.1 |
 | [Thailand](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-thailand-v1.0.0) | 1.0.0 |
+| [Turkey](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-tr-v1.0.0) | 1.0.0 |
 | [Uganda](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ug-v1.0.0) | 1.0.0 |
 | [United Kingdom](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-gb-v1.0.0) | 1.0.0 |
 | [United States](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-us-v1.0.0) | 1.0.0 |
@@ -171,7 +172,7 @@ The current source tree contains official wrapper artifacts for every country
 requested through FloAdmin tax-support tickets: Argentina, Algeria, Cameroon,
 Egypt, France, Ghana, the United Kingdom, Indonesia, Japan, Kenya, Morocco,
 Mexico, Nepal, Pakistan, the Philippines, Saudi Arabia, South Africa, Thailand,
-Uganda, the United States, and Uzbekistan. The `official-*` artifacts supersede
+Turkey, Uganda, the United States, and Uzbekistan. The `official-*` artifacts supersede
 the former `community-*` sources.
 
 Each new official wrapper contains an advanced and simple thermal invoice

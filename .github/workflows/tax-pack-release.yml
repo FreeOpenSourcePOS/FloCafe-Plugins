@@ -69,3 +69,16 @@ jobs:
             --json assets \
             --jq '.assets | length')"
           test "$ASSET_COUNT" -eq 3
+          RELEASE_ID="$(gh api --paginate \
+            'repos/FreeOpenSourcePOS/FloCafe-Plugins/releases?per_page=100' \
+            --jq ".[] | select(.tag_name == \"$GITHUB_REF_NAME\") | .id" \
+            | sed -n '1p')"
+          test -n "$RELEASE_ID"
+          gh api --method PATCH \
+            "repos/FreeOpenSourcePOS/FloCafe-Plugins/releases/$RELEASE_ID" \
+            -F draft=false >/dev/null
+          sleep 5
+          PUBLISHED_ASSET_COUNT="$(gh api \
+            "repos/FreeOpenSourcePOS/FloCafe-Plugins/releases/$RELEASE_ID" \
+            --jq '.assets | length')"
+          test "$PUBLISHED_ASSET_COUNT" -eq 3

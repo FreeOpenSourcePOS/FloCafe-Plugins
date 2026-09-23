@@ -69,11 +69,3 @@ jobs:
             --json assets \
             --jq '.assets | length')"
           test "$ASSET_COUNT" -eq 3
-          gh release edit "$GITHUB_REF_NAME" \
-            --repo FreeOpenSourcePOS/FloCafe-Plugins \
-            --draft=false
-          PUBLISHED_ASSET_COUNT="$(gh release view "$GITHUB_REF_NAME" \
-            --repo FreeOpenSourcePOS/FloCafe-Plugins \
-            --json assets \
-            --jq '.assets | length')"
-          test "$PUBLISHED_ASSET_COUNT" -eq 3

@@ -58,6 +58,7 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" \
             --repo FreeOpenSourcePOS/FloCafe-Plugins \
+            --draft \
             --title "$GITHUB_REF_NAME" \
             --notes "Signed FloCafe country-pack release. Activation remains an explicit owner action in the app."
           gh release upload "$GITHUB_REF_NAME" \
@@ -68,3 +69,11 @@ jobs:
             --json assets \
             --jq '.assets | length')"
           test "$ASSET_COUNT" -eq 3
+          gh release edit "$GITHUB_REF_NAME" \
+            --repo FreeOpenSourcePOS/FloCafe-Plugins \
+            --draft=false
+          PUBLISHED_ASSET_COUNT="$(gh release view "$GITHUB_REF_NAME" \
+            --repo FreeOpenSourcePOS/FloCafe-Plugins \
+            --json assets \
+            --jq '.assets | length')"
+          test "$PUBLISHED_ASSET_COUNT" -eq 3

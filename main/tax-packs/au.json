@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "official-au",
+  "publisher": "FreeOpenSourcePOS",
+  "sourceType": "official",
+  "version": "1.0.0",
+  "country": "AU",
+  "jurisdiction": "*",
+  "currency": "AUD",
+  "effectiveFrom": "2026-09-23",
+  "publishedAt": "2026-09-23",
+  "minFloVersion": "3.2.0",
+  "taxPoint": "finalized_at",
+  "inclusivePricingDefault": true,
+  "registrationNumberLabel": "ABN",
+  "categories": [
+    {
+      "id": "standard",
+      "label": "Standard food and restaurant supply",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "packaging",
+      "label": "Packaging",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "service_charge",
+      "label": "Service charge",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "addon",
+      "label": "Addon",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "gst_free_food",
+      "label": "Qualifying GST-free food sold for off-premises consumption",
+      "ruleIds": [
+        "gst-free"
+      ]
+    }
+  ],
+  "defaultCategories": {
+    "product": "standard",
+    "packaging": "packaging",
+    "delivery": "delivery",
+    "service_charge": "service_charge",
+    "addon": "addon"
+  },
+  "unclassifiedCategoryId": "unclassified",
+  "rules": [
+    {
+      "id": "standard",
+      "label": "GST (dine-in, hot takeaway, and other taxable food/beverages)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "10"
+    },
+    {
+      "id": "gst-free",
+      "label": "GST-free qualifying food",
+      "type": "percent",
+      "categoryIds": [
+        "gst_free_food"
+      ],
+      "rate": "0"
+    }
+  ],
+  "taxRounding": {
+    "scope": "document",
+    "method": "half_up",
+    "decimalPlaces": 2,
+    "remainderAllocation": "largest_remainder"
+  },
+  "payableRounding": {
+    "increment": "0.01",
+    "method": "half_up"
+  },
+  "registrationNumberFormat": {
+    "pattern": "^\\d{11}$",
+    "description": "ABN format"
+  }
+}

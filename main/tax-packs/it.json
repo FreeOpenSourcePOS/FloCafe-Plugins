@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "official-it",
+  "publisher": "FreeOpenSourcePOS",
+  "sourceType": "official",
+  "version": "1.0.0",
+  "country": "IT",
+  "jurisdiction": "*",
+  "currency": "EUR",
+  "effectiveFrom": "2026-09-23",
+  "publishedAt": "2026-09-23",
+  "minFloVersion": "3.2.0",
+  "taxPoint": "finalized_at",
+  "inclusivePricingDefault": true,
+  "registrationNumberLabel": "Partita IVA",
+  "categories": [
+    {
+      "id": "standard",
+      "label": "Standard food and restaurant supply",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "packaging",
+      "label": "Packaging",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "service_charge",
+      "label": "Service charge",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "addon",
+      "label": "Addon",
+      "ruleIds": [
+        "standard"
+      ]
+    },
+    {
+      "id": "unclassified",
+      "label": "Unclassified",
+      "ruleIds": [
+        "standard"
+      ]
+    }
+  ],
+  "defaultCategories": {
+    "product": "standard",
+    "packaging": "packaging",
+    "delivery": "delivery",
+    "service_charge": "service_charge",
+    "addon": "addon"
+  },
+  "unclassifiedCategoryId": "unclassified",
+  "rules": [
+    {
+      "id": "standard",
+      "label": "IVA (restaurant supply of food and beverages)",
+      "type": "percent",
+      "categoryIds": [
+        "standard",
+        "packaging",
+        "delivery",
+        "service_charge",
+        "addon",
+        "unclassified"
+      ],
+      "rate": "10"
+    }
+  ],
+  "taxRounding": {
+    "scope": "document",
+    "method": "half_up",
+    "decimalPlaces": 2,
+    "remainderAllocation": "largest_remainder"
+  },
+  "payableRounding": {
+    "increment": "0.01",
+    "method": "half_up"
+  },
+  "registrationNumberFormat": {
+    "pattern": "^(IT)?\\d{11}$",
+    "description": "Partita IVA format"
+  }
+}

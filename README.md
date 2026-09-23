@@ -11,12 +11,15 @@ country to open its release page.
 | --- | --- |
 | [Algeria](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-dz-v1.0.0) | 1.0.0 |
 | [Argentina](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ar-v1.0.0) | 1.0.0 |
+| [Australia](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-au-v1.0.0) | 1.0.0 |
 | [Cameroon](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-cm-v1.0.0) | 1.0.0 |
 | [Egypt](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-eg-v1.0.0) | 1.0.0 |
 | [France](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-fr-v1.0.0) | 1.0.0 |
+| [Germany](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-de-v1.0.0) | 1.0.0 |
 | [Ghana](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-gh-v1.0.0) | 1.0.0 |
 | [India](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-india-v1.0.5) | 1.0.5 |
 | [Indonesia](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-id-v1.0.0) | 1.0.0 |
+| [Italy](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-it-v1.0.0) | 1.0.0 |
 | [Japan](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-jp-v1.0.0) | 1.0.0 |
 | [Kenya](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-ke-v1.0.0) | 1.0.0 |
 | [Mexico](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-mx-v1.0.0) | 1.0.0 |
@@ -32,6 +35,7 @@ country to open its release page.
 | [United Kingdom](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-gb-v1.0.0) | 1.0.0 |
 | [United States](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-us-v1.0.0) | 1.0.0 |
 | [Uzbekistan](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-uz-v1.0.0) | 1.0.0 |
+| [Vietnam](https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/tax-pack-official-vn-v1.0.0) | 1.0.0 |
 
 The India wrapper includes two print templates:
 
@@ -44,17 +48,32 @@ The India wrapper includes two print templates:
 
 ## Compatibility
 
-`official-india@1.0.5` is a wrapped plugin artifact. It is installable by the
-FloCafe wrapper-loader branch that validates the full wrapper bytes while
+`official-india@1.0.5` is a wrapped plugin artifact. FloCafe `3.2.0` and newer
+contain the wrapper-loader path that validates the full wrapper bytes while
 storing the inner `taxPack` as `packJson`.
 
-Released/older FloCafe builds that only parse plain `CountryPack` JSON are
-expected to fail when installing India from the latest catalog. Do not publish
-additional wrapped plugin artifacts until the corresponding FloCafe loader path
-has landed in the target build line.
+FloCafe builds older than `3.2.0` that only parse plain `CountryPack` JSON are
+expected to fail when installing wrapped artifacts. New wrapped plugins must
+therefore declare `minFloVersion: 3.2.0` or newer.
 
 Thailand is not in the active catalog while the India wrapper-template path is
 being tested.
+
+## 2026 country expansion
+
+Four additional wrapped artifacts target wrapper-capable FloCafe `3.2.0` and
+newer:
+
+- Australia, Germany, Italy, and Vietnam
+- Vietnam tracks FloAdmin ticket `RL5-NW5N`
+
+Brazil (`2X9-KQZ6`), Canada, China, and Russia are researched but intentionally
+deferred because a country-wide offline profile cannot safely select their
+current jurisdiction-, taxpayer-status-, exemption-, or transition-dependent
+restaurant taxes.
+
+The tax decisions, official sources, cross-country comparison, and limitations
+are recorded in [`docs/country-tax-research-2026-09-23.md`](docs/country-tax-research-2026-09-23.md).
 
 `tax-packs/official-india/v1.0.5/plugin.json` is the India wrapper source for
 the fuller GST receipt anatomy. It keeps the printer-column template contract

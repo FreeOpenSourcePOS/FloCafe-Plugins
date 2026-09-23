@@ -9,9 +9,18 @@ const root = path.resolve(__dirname, '..');
 const sourceDir = path.join(root, 'main', 'tax-packs');
 const wrapperDir = path.join(root, 'tax-packs');
 const publishedAt = '2026-09-06';
+const expansionPublishedAt = '2026-09-23';
 
 const countries = {
+  AU: {
+    name: 'Australia', currency: 'AUD', rate: '10', label: 'GST', registration: 'ABN',
+    pattern: '^\\d{11}$', publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
   CM: { name: 'Cameroon', currency: 'XAF', rate: '19.25', label: 'VAT', registration: 'Taxpayer Identification Number' },
+  DE: {
+    name: 'Germany', currency: 'EUR', rate: '7', label: 'VAT', registration: 'VAT identification number',
+    pattern: '^DE\\d{9}$', publishedAt: expansionPublishedAt, effectiveFrom: '2026-01-01', minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
   UG: { name: 'Uganda', currency: 'UGX', rate: '18', label: 'VAT', registration: 'TIN', pattern: '^\\d{10}$' },
   KE: {
     name: 'Kenya',
@@ -29,6 +38,15 @@ const countries = {
   GB: { name: 'United Kingdom', currency: 'GBP', rate: '20', label: 'VAT', registration: 'VAT registration number', pattern: '^GB\\d{9}(\\d{3})?$', coldRate: '0', alcoholRate: '20' },
   EG: { name: 'Egypt', currency: 'EGP', rate: '14', label: 'VAT', registration: 'Tax registration number', pattern: '^\\d{9}$' },
   DZ: { name: 'Algeria', currency: 'DZD', rate: '19', label: 'TVA', registration: 'NIF', pattern: '^\\d{15}$', reducedRate: '9' },
+  IT: {
+    name: 'Italy', currency: 'EUR', rate: '10', label: 'IVA', registration: 'Partita IVA',
+    pattern: '^(IT)?\\d{11}$', publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  VN: {
+    name: 'Vietnam', currency: 'VND', rate: '8', label: 'VAT', registration: 'Tax identification number',
+    pattern: '^\\d{10}(-\\d{3})?$', publishedAt: expansionPublishedAt, effectiveFrom: '2025-07-01',
+    effectiveTo: '2026-12-31', minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
 };
 
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
@@ -39,11 +57,12 @@ function writeJson(file, value) {
 
 function allCategoryIds(pack) { return pack.categories.map((category) => category.id); }
 function rule(id, label, rate, categoryIds) {
-  return { id, label, type: 'percent', categoryIds, rate };
+  return { id, label, type: 'percent', categoryIds: [...categoryIds], rate };
 }
 
 function basePack(code, meta) {
-  const effectiveDate = meta.publishedAt || publishedAt;
+  const artifactDate = meta.publishedAt || publishedAt;
+  const effectiveDate = meta.effectiveFrom || artifactDate;
   const standardIds = ['standard', 'packaging', 'delivery', 'service_charge', 'addon', 'unclassified'];
   const pack = {
     schemaVersion: 1,
@@ -55,8 +74,8 @@ function basePack(code, meta) {
     jurisdiction: '*',
     currency: meta.currency,
     effectiveFrom: effectiveDate,
-    publishedAt: effectiveDate,
-    minFloVersion: '2.4.0',
+    publishedAt: artifactDate,
+    minFloVersion: meta.minFloVersion || '2.4.0',
     taxPoint: 'finalized_at',
     inclusivePricingDefault: true,
     registrationNumberLabel: meta.registration,
@@ -67,7 +86,40 @@ function basePack(code, meta) {
     taxRounding: { scope: 'document', method: 'half_up', decimalPlaces: 2, remainderAllocation: 'largest_remainder' },
     payableRounding: { increment: '0.01', method: 'half_up' },
   };
+  if (meta.effectiveTo) pack.effectiveTo = meta.effectiveTo;
   if (meta.pattern) pack.registrationNumberFormat = { pattern: meta.pattern, description: `${meta.registration} format` };
+  return pack;
+}
+
+function addCategory(pack, id, label, ruleIds) {
+  pack.categories.push({ id, label, ruleIds });
+}
+
+function customizePack(pack) {
+  switch (pack.country) {
+    case 'AU':
+      pack.rules[0].label = 'GST (dine-in, hot takeaway, and other taxable food/beverages)';
+      addCategory(pack, 'gst_free_food', 'Qualifying GST-free food sold for off-premises consumption', ['gst-free']);
+      pack.rules.push(rule('gst-free', 'GST-free qualifying food', '0', ['gst_free_food']));
+      break;
+    case 'DE':
+      pack.rules[0].label = 'VAT (restaurant and catering food, excluding beverages)';
+      addCategory(pack, 'beverages', 'Beverages (including alcoholic beverages)', ['beverages-standard']);
+      pack.rules.push(rule('beverages-standard', 'VAT (beverages)', '19', ['beverages']));
+      break;
+    case 'IT':
+      pack.rules[0].label = 'IVA (restaurant supply of food and beverages)';
+      break;
+    case 'VN':
+      pack.rules[0].label = 'VAT (temporarily reduced eligible food and restaurant supply through 2026-12-31)';
+      addCategory(pack, 'excise_goods', 'Alcohol and other excise-taxed goods excluded from VAT reduction', ['vat-standard']);
+      pack.rules.push(rule('vat-standard', 'VAT (goods excluded from temporary reduction)', '10', ['excise_goods']));
+      pack.taxRounding.decimalPlaces = 0;
+      pack.payableRounding.increment = '1';
+      break;
+    default:
+      break;
+  }
   return pack;
 }
 
@@ -158,7 +210,7 @@ function makeWrapper(pack, name, meta = {}) {
 }
 
 for (const [code, meta] of Object.entries(countries)) {
-  const pack = addSpecialCategories(basePack(code, meta), meta);
+  const pack = customizePack(addSpecialCategories(basePack(code, meta), meta));
   writeJson(path.join(sourceDir, `${code.toLowerCase()}.json`), pack);
   writeJson(path.join(wrapperDir, pack.id, `v${pack.version}`, 'plugin.json'), makeWrapper(pack, meta.name, meta));
 }

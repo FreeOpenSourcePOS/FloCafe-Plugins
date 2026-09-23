@@ -57,7 +57,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$GITHUB_REF_NAME" \
-            "$RUNNER_TEMP"/tax-pack-release/* \
             --repo FreeOpenSourcePOS/FloCafe-Plugins \
             --title "$GITHUB_REF_NAME" \
             --notes "Signed FloCafe country-pack release. Activation remains an explicit owner action in the app."
+          gh release upload "$GITHUB_REF_NAME" \
+            "$RUNNER_TEMP"/tax-pack-release/* \
+            --repo FreeOpenSourcePOS/FloCafe-Plugins
+          ASSET_COUNT="$(gh release view "$GITHUB_REF_NAME" \
+            --repo FreeOpenSourcePOS/FloCafe-Plugins \
+            --json assets \
+            --jq '.assets | length')"
+          test "$ASSET_COUNT" -eq 3

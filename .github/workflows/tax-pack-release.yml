@@ -52,7 +52,15 @@ jobs:
           fi
           node scripts/tax-packs/prepare-release.cjs "${ARGS[@]}"
 
-      - name: Publish immutable release assets
+      - name: Retain signed release assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tax-pack-release-${{ github.ref_name }}
+          path: ${{ runner.temp }}/tax-pack-release/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Create release for maintainer asset upload
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -60,13 +68,3 @@ jobs:
             --repo FreeOpenSourcePOS/FloCafe-Plugins \
             --title "$GITHUB_REF_NAME" \
             --notes "Signed FloCafe country-pack release. Activation remains an explicit owner action in the app."
-          sleep 15
-          gh release upload "$GITHUB_REF_NAME" \
-            "$RUNNER_TEMP"/tax-pack-release/* \
-            --repo FreeOpenSourcePOS/FloCafe-Plugins
-          sleep 20
-          ASSET_COUNT="$(gh release view "$GITHUB_REF_NAME" \
-            --repo FreeOpenSourcePOS/FloCafe-Plugins \
-            --json assets \
-            --jq '.assets | length')"
-          test "$ASSET_COUNT" -eq 3

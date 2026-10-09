@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Test release artifact preparation
+        run: node --test tests/prepare-release.test.cjs
+
       - name: Download the newest published catalog
         id: previous-catalog
         env:

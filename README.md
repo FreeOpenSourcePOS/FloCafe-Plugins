@@ -182,6 +182,13 @@ assets:
 - `catalog.json`
 
 Published releases are listed under [Supported countries](#supported-countries).
+Community pack sources are separate from that list until their signed release
+is published. The Singapore community source is an unpublished candidate; no
+catalog entry or public release is available yet. The release workflow tests
+artifact preparation before signing and stages exactly three assets in a draft
+release for review. A draft or tag alone does not publish a pack. Cumulative
+catalog generation preserves unrelated community entries, and an official
+release removes community entries only for the same country.
 
 The current source tree contains official wrapper artifacts for every country
 requested through FloAdmin tax-support tickets: Argentina, Algeria, Cameroon,

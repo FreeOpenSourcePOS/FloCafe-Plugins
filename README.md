@@ -194,8 +194,7 @@ The current source tree contains official wrapper artifacts for every country
 requested through FloAdmin tax-support tickets: Argentina, Algeria, Cameroon,
 Egypt, France, Ghana, the United Kingdom, Indonesia, Japan, Kenya, Morocco,
 Mexico, Nepal, Pakistan, the Philippines, Saudi Arabia, South Africa, Thailand,
-Turkey, Uganda, the United States, and Uzbekistan. The `official-*` artifacts supersede
-the former `community-*` sources.
+Turkey, Uganda, the United States, and Uzbekistan.
 
 Each new official wrapper contains an advanced and simple thermal invoice
 template with profiles for 32, 36, 40, 42, 44, and 48 printable columns. New

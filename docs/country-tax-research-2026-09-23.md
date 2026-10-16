@@ -1,6 +1,6 @@
 # Country tax-pack research — 2026-09-23
 
-This note records the scope and primary sources used to select four country
+This note records the scope and primary sources used to select ten country
 artifacts and defer four complicated countries on 2026-09-23. It is
 implementation guidance, not tax advice.
 Merchants remain responsible for registration, exemptions, product
@@ -27,6 +27,12 @@ IMF source: <https://data.imf.org/Datasets/WEO>
 | Germany | Uses 7% VAT for restaurant and catering food from 2026-01-01 and 19% for beverages. | [German Federal Ministry of Finance guidance dated 2025-12-22](https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Anwendungserlass/2025-12-22-verpflegungsdienstleistungen.html) |
 | Italy | Uses 10% IVA for restaurant supplies of food and beverages. Retail/takeaway goods can require product-specific classification and are outside this restaurant default. | [Agenzia delle Entrate response 231/2022, citing Table A, Part III, no. 121](https://www.agenziaentrate.gov.it/portale/documents/20143/4335071/Risposta_n_231_2022.pdf) |
 | Vietnam | Uses the temporary 8% VAT rate for eligible food and restaurant supplies from 2025-07-01 through 2026-12-31 and 10% VAT for alcohol and other excise-taxed goods excluded from the reduction. Product-specific special consumption tax is outside this VAT pack. | [Government Decree 174/2025/NĐ-CP](https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-174-2025-nd-cp-45374.htm), [Ministry of Finance explanation](https://portal.mof.gov.vn/hoidapcstc/home/cthoidap/155493) |
+| Denmark | Uses the single national 25% VAT rate for restaurant food, beverages, service charges, packaging, and delivery. | [Danish Tax Agency VAT overview](https://skat.dk/en-us/erhverv/moms/i-gang-med-moms) |
+| Hong Kong | Uses a 0% tax profile because Hong Kong does not impose VAT or sales tax. The pack does not model profits tax or other business-level taxes. | [Financial Services and the Treasury Bureau tax policy](https://www.fstb.gov.hk/en/treasury/general/prevailing-tax-policy.htm) |
+| Netherlands | Uses 9% VAT for restaurant and takeaway food and non-alcoholic beverages, and 21% for alcoholic beverages. | [Dutch Tax Administration food guidance](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/tarieven_en_vrijstellingen/goederen_9_btw/voedingsmiddelen/), [drinks guidance](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/tarieven_en_vrijstellingen/goederen_9_btw/voedingsmiddelen/dranken) |
+| New Zealand | Uses the broad national 15% GST rate for restaurant food, beverages, service charges, packaging, and delivery. | [Inland Revenue GST guidance](https://www.ird.govt.nz/gst/charging-gst) |
+| Singapore | Uses 9% GST for food and beverage sales and applies GST to the total price including an F&B service charge. | [IRAS GST rates](https://www.iras.gov.sg/quick-links/tax-rates/goods-and-services-tax-%28gst%29-rates), [IRAS hotel and F&B guidance](https://www.iras.gov.sg/taxes/goods-services-tax-%28gst%29/specific-business-sectors/hotel-and-food-beverage) |
+| Switzerland | Uses 8.1% VAT for restaurant services and alcoholic beverages, with a manual 2.6% category for qualifying takeaway food and non-alcoholic beverages. | [Swiss Federal Tax Administration VAT rates](https://www.estv.admin.ch/en/vat-rates-switzerland), [VAT Act article 25](https://www.estv.admin.ch/dam/estv/en/dokumente/mwst/publikationen/mwst-publ-vat-act-en.pdf.download.pdf/mwst-publ-vat-act-en.pdf) |
 
 ## Researched but deferred
 

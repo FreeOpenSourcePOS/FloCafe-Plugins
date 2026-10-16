@@ -57,10 +57,11 @@ being tested.
 
 ## 2026 country expansion
 
-Four additional wrapped release candidates target wrapper-capable FloCafe
+Ten additional wrapped release candidates target wrapper-capable FloCafe
 `3.2.0` and newer, but are not yet published:
 
 - Australia, Germany, Italy, and Vietnam
+- Denmark, Hong Kong, the Netherlands, New Zealand, Singapore, and Switzerland
 - Vietnam tracks FloAdmin ticket `RL5-NW5N`
 
 Brazil (`2X9-KQZ6`), Canada, China, and Russia are researched but intentionally

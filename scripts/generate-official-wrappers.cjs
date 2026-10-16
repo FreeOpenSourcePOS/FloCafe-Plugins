@@ -47,6 +47,30 @@ const countries = {
     pattern: '^\\d{10}(-\\d{3})?$', publishedAt: expansionPublishedAt, effectiveFrom: '2025-07-01',
     effectiveTo: '2026-12-31', minFloVersion: '3.2.0', exactProfileWidths: true,
   },
+  NZ: {
+    name: 'New Zealand', currency: 'NZD', rate: '15', label: 'GST', registration: 'GST number',
+    pattern: '^\\d{9}$', publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  SG: {
+    name: 'Singapore', currency: 'SGD', rate: '9', label: 'GST', registration: 'GST registration number',
+    publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  DK: {
+    name: 'Denmark', currency: 'DKK', rate: '25', label: 'VAT', registration: 'VAT number',
+    pattern: '^DK\\d{8}$', publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  NL: {
+    name: 'Netherlands', currency: 'EUR', rate: '9', label: 'VAT', registration: 'VAT identification number',
+    publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  CH: {
+    name: 'Switzerland', currency: 'CHF', rate: '8.1', label: 'VAT', registration: 'VAT number',
+    publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
+  HK: {
+    name: 'Hong Kong', currency: 'HKD', rate: '0', label: 'Tax', registration: 'Business registration number',
+    publishedAt: expansionPublishedAt, minFloVersion: '3.2.0', exactProfileWidths: true,
+  },
 };
 
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
@@ -116,6 +140,22 @@ function customizePack(pack) {
       pack.rules.push(rule('vat-standard', 'VAT (goods excluded from temporary reduction)', '10', ['excise_goods']));
       pack.taxRounding.decimalPlaces = 0;
       pack.payableRounding.increment = '1';
+      break;
+    case 'SG':
+      pack.rules[0].label = 'GST (food, beverages, and service charge)';
+      break;
+    case 'NL':
+      pack.rules[0].label = 'VAT (food and non-alcoholic beverages, including restaurant and takeaway)';
+      addCategory(pack, 'alcohol', 'Alcoholic beverages', ['alcohol-standard']);
+      pack.rules.push(rule('alcohol-standard', 'VAT (alcoholic beverages)', '21', ['alcohol']));
+      break;
+    case 'CH':
+      pack.rules[0].label = 'VAT (restaurant services and alcoholic beverages)';
+      addCategory(pack, 'takeaway_food', 'Qualifying takeaway food and non-alcoholic beverages', ['takeaway-reduced']);
+      pack.rules.push(rule('takeaway-reduced', 'VAT (qualifying takeaway food and non-alcoholic beverages)', '2.6', ['takeaway_food']));
+      break;
+    case 'HK':
+      pack.rules[0].label = 'No VAT or sales tax';
       break;
     default:
       break;
